@@ -1,0 +1,79 @@
+{% set baseUrl = alias('@web') ~ '/' %}
+{% set env = getenv('ENVIRONMENT') %}
+{% header "Link: <#{baseUrl}>; rel=dns-prefetch;,<#{baseUrl}>; rel=preconnect; crossorigin;" %}
+<!DOCTYPE html>
+<html lang="{{ craft.app.language |slice(0,2) }}" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+	<head>
+		<link rel="dns-prefetch" href="{{ baseUrl }}">
+		<link rel="preconnect" href="{{ baseUrl }}" crossorigin>
+
+		{# -- Any <link> tags that should be included in the header #}
+		{% block _head_links %}
+		{% endblock %}
+
+		{% import "_partials/_macros.twig" as macro %}
+		{% include "_partials/_global_header.twig" %}
+
+		{# -- Inline CSS block used by templates for Critical CSS #}
+		{% block _inline_css %}
+		{% endblock %}
+
+		{% if env != 'dev' %}
+			{{ craft.twigpack.includeCriticalCssTags() }}
+			{{ craft.twigpack.includeCriticalCssTags() }}
+		{% endif %}
+
+		{# -- CSS bundle #}
+		{{ craft.twigpack.includeCssModule("index.css", true) }}
+		{{ craft.twigpack.includeCssRelPreloadPolyfill() }}
+
+		{# -- </head> JS -- #}
+		{% block _head_js %}
+		{% endblock %}
+	</head>
+
+	<body class="{{ bodyClass is defined ? bodyClass : '' }} {{ contentClass is defined ? contentClass : 'bg-white' }} flex">
+		<div id="app" class="{% if contentClass is defined %}{{ contentClass }} {% endif %}flex flex-1 flex-col min-h-screen overflow-x-hidden">
+			{# -- Info header, including _navbar.twig -- #}
+			{% include "_partials/_header.twig" %}
+
+			<main>
+				<div class="maincontent container">
+						{# -- Primary content block -- #}
+						{% block content %}
+						{% endblock %}
+				</div>
+			</main>
+
+			{# -- HTML Footer -- #}
+			{% include "_partials/_footer.twig" %}
+		</div>
+
+		{# -- No JS warning -- #}
+		<noscript>
+			<div class="fixed bottom-0 z-40 w-full">
+				<input type="checkbox" class="js-notice-state absolute" id="js-notice" />
+				<div class="js-notice-message flex lg:inline-flex justify-center w-full bg-error px-4 py-4 font-primary text-white">
+					<div>
+						<strong class="font-semi-bold">JavaScript er slått av</strong>
+						<span class="block sm:inline">For å oppleve nettsiden slik den er tenkt må du aktivere Javascript. Her finner du <a href="https://www.enable-javascript.com/no/" target="_blank" class="underline"> instruksjoner for hvordan du aktiverer Javascript i nettleseren</a>.</span>
+						<span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+							<label for="js-notice" class="close-js-notice">
+								<svg class="fill-current w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+							</label>
+						</span>
+					</div>
+				</div>
+			</div>
+		</noscript>
+
+		{% set jsUrl = craft.twigpack.getModuleUri('index.js') %}
+		{% do view.registerJsFile(jsUrl) %}
+		{% set jsUrl2 = craft.twigpack.getModuleUri('router.js') %}
+		{% do view.registerJsFile(jsUrl2) %}
+
+		{# -- Inline JS -- #}
+		{% block _inline_js %}
+		{% endblock %}
+	</body>
+</html>

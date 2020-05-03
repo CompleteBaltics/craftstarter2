@@ -1,0 +1,97 @@
+{# SEO Start #}
+{# Tip: You can pass the handle of your SEO field - getSeoField('mySeoFieldHandle') #}
+{% set seo = getSeoField() %}
+{% if seo is null or seo.title == '' %}
+	{# {% set seo = craft.seo.custom(siteName, '', false) %} #}
+{% endif -%}
+
+{% set locale = craft.app.locale %}
+{% set locales = craft.app.i18n.siteLocaleIds|without(locale) %}
+
+{% set siteTitle = seo.title and seo.title is not empty ? seo.title : entry.title ~ ' - ' ~ siteName %}
+{% if craft.app.request.url == '/' %}
+	{% set siteTitle = seo.titleRaw ? seo.titleRaw[1] : siteName %}
+{% endif -%}
+
+<title>{{ siteTitle }}</title>
+<meta name="description" content="{{ seo.description }}" /> {# is using dynamic entry titles in Craft CMS control panel /admin/seo/settings #}
+
+{# Facebook #}
+{% set fb = seo.social.facebook -%}
+{% set fbDescription = seo.description %}
+{% set fbImage = null %}
+{% set fbImageUrl = '' %}
+{% set fbTitle = fb.title and fb.title is not empty and fb.title is not same as('- ' ~ siteName) ? fb.title : siteTitle %}
+
+{% if fb.description and fb.description is not empty %}
+	{% set fbDescription = fb.description %}
+{% elseif entry.ingress and entry.ingress is not empty %}
+	{% set fbDescription = entry.ingress %}
+{% endif %}
+
+{% if fb.image %}
+	{% set fbImage = fb.image %}
+	{% set fbImageUrl = craft.seo.facebookImage(fbImage) %}
+{% elseif entry.image and entry.image.one() %}
+	{% set fbImage = entry.image.one() %}
+	{% set fbImageUrl = fbImage.getUrl('social') %}
+{% elseif entry.hero and entry.hero.backgroundImage %}
+	{% set fbImage = entry.hero.backgroundImage.one() %}
+	{% set fbImageUrl = fbImage.getUrl('social') %}
+{% endif %}
+
+{% if fb.handle %}<meta property="fb:app_id" content="{{ fb.handle }}">{% endif %}
+<meta property="og:url" content="{{ craft.app.request.absoluteUrl }}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ fbTitle }}" />
+<meta property="og:image" content="{{ fbImageUrl }}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:description" content="{{ fbDescription }}" />
+<meta property="og:site_name" content="{{ siteName }}" />
+<meta property="og:locale" content="{{ locale|replace('-', '_') }}" />
+{% for locale in locales -%}
+	<meta property="og:locale:alternate" content="{{ locale|replace('-', '_') }}" />
+{% endfor %}
+
+{# Twitter #}
+{% set tw = seo.social.twitter -%}
+{% set twDescription = seo.description %}
+{% set twitterImage = null %}
+{% set twitterImageUrl = '' %}
+{% set twTitle = tw.title and tw.title is not empty and tw.title is not same as('- ' ~ siteName) ? tw.title : siteTitle %}
+
+{% if tw.description and tw.description is not empty %}
+	{% set twDescription = tw.description %}
+{% elseif entry.ingress and entry.ingress is not empty %}
+	{% set twDescription = entry.ingress %}
+{% endif %}
+
+{% if tw.image %}
+	{% set twitterImage = tw.image %}
+	{% set twitterImageUrl = craft.seo.twitterImage(twitterImage) %}
+{% elseif entry.image and entry.image.one() %}
+	{% set twitterImage = entry.image.one() %}
+	{% set twitterImageUrl = twitterImage.getUrl('social') %}
+{% elseif entry.hero and entry.hero.backgroundImage %}
+	{% set twitterImage = entry.hero.backgroundImage.one() %}
+	{% set twitterImageUrl = twitterImage.getUrl('social') %}
+{% endif %}
+
+<meta name="twitter:card" content="summary_large_image" />
+{% if tw.handle %}<meta name="twitter:site" content="{{ tw.handle }}" />{% endif %}
+<meta name="twitter:url" content="{{ craft.app.request.absoluteUrl }}" />
+<meta name="twitter:title" content="{{ twTitle }}" />
+<meta name="twitter:description" content="{{ twDescription }}" />
+<meta name="twitter:image" content="{{ twitterImageUrl }}" />
+
+{% if seo.robots -%}
+	<meta name="robots" content="{{ seo.robots }}" />
+{% endif %}
+{%- if seo.expiry -%}
+	<meta name="robots" content="unavailable_after: {{ seo.expiry }}" />
+{% endif %}
+
+<link rel="home" href="{{ siteUrl }}" />
+<link rel="canonical" href="{{ seo.canonical }}">
+{# SEO End #}
