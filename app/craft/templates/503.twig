@@ -1,4 +1,4 @@
-{% extends (craft.app.request.isAjax) ? "ajax-layout" : "layout" %}
+{% extends (craft.app.request.isAjax) ? "layouts/ajax-layout" : "layouts/layout" %}
 
 {% set errorMessage = '<p class="font-primary text-medium text-center">' ~ ('You have no right to access this page'|t) ~ '</p>' %}
 {% set errorEntry = craft.globalSets().handle('errorPages').one() %}

@@ -5,7 +5,6 @@ const path = require('path');
 const merge = require('webpack-merge');
 
 // webpack plugins
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -37,11 +36,11 @@ const configureBabelLoader = (browserList) => {
 					'@babel/plugin-syntax-dynamic-import',
 					'@babel/plugin-proposal-class-properties',
 					[
-						"@babel/plugin-transform-runtime", {
-								"regenerator": true
-						}
+							"@babel/plugin-transform-runtime", {
+							"regenerator": true
+					}
 					]
-				]
+				],
 			}
 		}
 	};

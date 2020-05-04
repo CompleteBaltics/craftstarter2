@@ -1,0 +1,5 @@
+{% macro dateFormatted(givenDate) %}
+    {{ givenDate | date("jS F Y") }}
+{% endmacro %}
+
+{% macro is_active(entryId, pageId) %}{% if entryId == pageId %}active{% endif %}{% endmacro %}

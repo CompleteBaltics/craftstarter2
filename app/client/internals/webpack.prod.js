@@ -264,7 +264,8 @@ module.exports = [
 		common.modernConfig,
 		{
 			output: {
-				filename: path.join('./js', '[name].[chunkhash].js')
+				filename: path.join('./js', '[name].[chunkhash].js'),
+				publicPath: settings.paths.dist.pathUrl
 			},
 			mode: 'production',
 			devtool: 'source-map',

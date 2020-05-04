@@ -31,7 +31,10 @@ return [
         'useEmailAsUsername' => true,
         'enableGql' => false,
         'generateTransformsBeforePageLoad' => true,
-        'maxUploadFileSize' => '67108864'
+        'maxUploadFileSize' => '67108864',
+        'aliases' => [
+            '@rootUrl' => getenv('DEFAULT_SITE_URL')
+        ]
     ],
 
     // Dev environment settings

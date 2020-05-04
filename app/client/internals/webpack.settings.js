@@ -18,12 +18,12 @@ module.exports = {
 			base: '../../craft/web/dist/',
 			clean: [
 				'**/*'
-			]
+			],
+			pathUrl: '/dist/'
 		},
 		templates: '../../craft/templates/'
 	},
 	urls: {
-		// local: 'https://vertikalhelse.local/',
 		critical: 'https://example.local/',
 		publicPath: () => process.env.PUBLIC_PATH || '/'
 	},
@@ -37,13 +37,11 @@ module.exports = {
 	babelLoaderConfig: {
 		exclude: /node_modules/
 	},
-	favIcon: [
-		{
-			from: './src/assets/favicon',
-			to: '../craft/web/dist/favicon',
-			public: '/dist/favicon'
-		}
-	],
+	favIcon: {
+		from: './src/assets/favicon/logo.png',
+		to: 'favicon',
+		public: '/dist/favicon'
+	},
 	criticalCssConfig: {
 		base: '../craft/web/dist/criticalcss/',
 		suffix: '_critical.min.css',
@@ -63,7 +61,7 @@ module.exports = {
 		port: () => process.env.DEVSERVER_PORT || 8080
 	},
 	manifestConfig: {
-		basePath: ''
+		basePath: '/dist/'
 	},
 	purgeCssConfig: {
 		paths: [

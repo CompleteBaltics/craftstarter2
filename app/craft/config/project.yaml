@@ -1,0 +1,62 @@
+dateModified: 1588508583
+email:
+  fromEmail: caspar@completewithus.com
+  fromName: Starter
+  transportType: craft\mail\transportadapters\Sendmail
+fieldGroups:
+  c093f93b-c7b0-41e1-9115-92f81525134a:
+    name: Common
+plugins:
+  field-manager:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+  freeform:
+    edition: lite
+    enabled: true
+    schemaVersion: 3.0.6
+  imager:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.0.0
+  redactor:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.3.0
+  seo:
+    edition: standard
+    enabled: true
+    schemaVersion: 3.1.0
+  super-table:
+    edition: standard
+    enabled: true
+    schemaVersion: 2.2.1
+  twigpack:
+    edition: standard
+    enabled: true
+    schemaVersion: 1.0.0
+siteGroups:
+  9e8c7804-a0bf-42f6-bce8-046c9846df4e:
+    name: Starter
+sites:
+  44f8a9b4-5c3e-4fbf-9718-b0c50069b649:
+    baseUrl: $DEFAULT_SITE_URL
+    handle: default
+    hasUrls: true
+    language: en-US
+    name: Starter
+    primary: true
+    siteGroup: 9e8c7804-a0bf-42f6-bce8-046c9846df4e
+    sortOrder: 1
+system:
+  edition: solo
+  live: true
+  name: Starter
+  schemaVersion: 3.4.10
+  timeZone: America/Los_Angeles
+users:
+  allowPublicRegistration: false
+  defaultGroup: null
+  photoSubpath: ''
+  photoVolumeUid: null
+  requireEmailVerification: true
