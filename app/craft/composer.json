@@ -1,4 +1,9 @@
 {
+  
+  "name": "completebaltics/craftstarter2",
+  "description": "A starter boilerplate for Craft 3.x with webpack",
+  "version": "1.0.0",
+  "type": "project",
   "require": {
     "aelvan/imager": "v2.4.0",
     "craftcms/cms": "3.4.10.1",
