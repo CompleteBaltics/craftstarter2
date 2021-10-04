@@ -6,7 +6,7 @@
   "type": "project",
   "require": {
     "aelvan/imager": "v2.4.0",
-    "craftcms/cms": "3.4.10.1",
+    "craftcms/cms": "3.7.14",
     "craftcms/redactor": "2.6.1",
     "ether/seo": "3.6.3",
     "nystudio107/craft-twigpack": "1.2.0",
